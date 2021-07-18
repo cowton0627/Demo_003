@@ -33,7 +33,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userNameTextField.delegate = self
         passwordTextField.delegate = self
        
-        /* 監聽 鍵盤顯示/隱藏 事件 */
+        //監聽 鍵盤顯示與隱藏
         let center:NotificationCenter = NotificationCenter.default
         center.addObserver(self, selector: #selector(keyboardShown),
                           name: UIResponder.keyboardWillShowNotification,
