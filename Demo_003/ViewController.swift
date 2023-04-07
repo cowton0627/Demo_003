@@ -7,38 +7,27 @@
 
 import UIKit
 import SwiftUI
-import FirebaseAuth
+//import FirebaseAuth
 import FacebookLogin
-import GoogleSignIn
+//import GoogleSignIn
 
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
+    
+    // MARK: - IBOutlet
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    //宣告編輯框
+    // 宣告編輯框
     var activeTextField: UITextField!
     
-    //編輯時, 儲存實體
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-    }
-    
-    //按下return 鍵盤收
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-//        self.view.endEditing(true)
-        return true
-    }
-    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        userNameTextField.delegate = self
-        passwordTextField.delegate = self
+        configureTextField()
        
-        //監聽 鍵盤顯示與隱藏123
+        // 監聽鍵盤顯示與隱藏
         let center:NotificationCenter = NotificationCenter.default
         center.addObserver(self, selector: #selector(keyboardShown),
                           name: UIResponder.keyboardWillShowNotification,
@@ -47,7 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                           name: UIResponder.keyboardWillHideNotification,
                           object: nil)
         
-        //加入註冊資料
+        // 加入註冊資料
 //        Auth.auth().createUser(withEmail: "newton0627@frs.com", password: "1314520") { result, error in
 //            guard let user = result?.user, error == nil else {
 //                print(error?.localizedDescription)
@@ -57,9 +46,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //        }
         
         
-        if let token = AccessToken.current, !token.isExpired {
-            fbLoginBtn.isHidden = true
-        }
+        /// 邏輯測試1, 若在 viewDidLoad 中檢查 token, 若正確則隱藏 fbLoginBtn
+//        if let token = AccessToken.current, !token.isExpired {
+//            fbLoginBtn.isHidden = true
+//        }
 
     }
     
@@ -67,15 +57,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if let token = AccessToken.current, !token.isExpired {
             performSegue(withIdentifier: "LoginToWelcome", sender: nil)
         }
-
     }
     
+    // MARK: - func
+    // 編輯時, 儲存實體
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    // 按下return, 鍵盤收
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func configureTextField() {
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
+    // MARK: - IBAction
     @IBAction func googleBtnTapped(_ sender: Any) {
-        let signInConfig = GIDConfiguration.init(clientID: "1016905938526-96mub16ag1ep1a37mdfui8qibghsu0a2.apps.googleusercontent.com")
-        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
-            guard error == nil else { return }
-            self.performSegue(withIdentifier: "LoginToWelcome", sender: nil)
-        }
+//        let signInConfig = GIDConfiguration.init(clientID: "1016905938526-96mub16ag1ep1a37mdfui8qibghsu0a2.apps.googleusercontent.com")
+//        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+//            guard error == nil else { return }
+//            self.performSegue(withIdentifier: "LoginToWelcome", sender: nil)
+//        }
         
     }
     
@@ -95,17 +102,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
             let emailTextField = signUpAlert.textFields![0]
             let passwordTextField = signUpAlert.textFields![1]
             
-            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
-                
-                    if error == nil {
-                        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: nil)
-                    } else {
-                        let alert = UIAlertController(title: "Caution", message: error?.localizedDescription, preferredStyle: .alert)
-                        let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
-                        alert.addAction(backAction)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-            })
+//            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+//
+//                    if error == nil {
+//                        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: nil)
+//                    } else {
+//                        let alert = UIAlertController(title: "Caution", message: error?.localizedDescription, preferredStyle: .alert)
+//                        let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
+//                        alert.addAction(backAction)
+//                        self.present(alert, animated: true, completion: nil)
+//                    }
+//            })
         }
                 
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -118,38 +125,51 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func fbLoginBtnTapped(_ sender: Any) {
-        //只使用FB登入
-//        let manager = LoginManager()
-//            manager.logIn { (result) in
-//               if case LoginResult.success(granted: _, declined: _, token: _) = result {
-//                      print("login ok")
-//                self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
-//                  } else {
-//                      print("login fail")
-//                  }
-//            }
+        // 只使用FB登入
+        let fbManager = LoginManager()
+        fbManager.logIn(permissions: [.publicProfile, .email]) { result in
+            
+           switch result {
+           case .success(granted: _, declined: _, token: _):
+               self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
+               print("success")
+           case .cancelled:
+               print("cancelled")
+           case .failed(_):
+               print("failed")
+           }
+        }
+        
+//        fbManager.logIn { result in
+//           if case LoginResult.success(granted: _, declined: _, token: _) = result {
+//               print("login ok")
+//            self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
+//           } else {
+//               print("login fail")
+//           }
+//        }
         
         //透過Firebase檢驗FB登入
-        let manager = LoginManager()
-        manager.logIn(permissions: [.publicProfile], viewController: self) { (result) in
-            if case LoginResult.success(granted: _, declined: _, token: let token) = result {
-                print("fb login ok")
-                
-                let credential =  FacebookAuthProvider.credential(withAccessToken: token!.tokenString)
-                    Auth.auth().signIn(with: credential) { [weak self] (result, error) in
-                    guard let self = self else { return }
-                    guard error == nil else {
-                        print(error!.localizedDescription)
-                        return
-                    }
-                    print("login ok")
-                    self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
-                }
-                
-            } else {
-                print("login fail")
-            }
-        }
+//        let manager = LoginManager()
+//        manager.logIn(permissions: [.publicProfile], viewController: self) { (result) in
+//            if case LoginResult.success(granted: _, declined: _, token: let token) = result {
+//                print("fb login ok")
+//
+////                let credential =  FacebookAuthProvider.credential(withAccessToken: token!.tokenString)
+////                    Auth.auth().signIn(with: credential) { [weak self] (result, error) in
+////                    guard let self = self else { return }
+////                    guard error == nil else {
+////                        print(error!.localizedDescription)
+////                        return
+////                    }
+////                    print("login ok")
+////                    self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
+////                }
+//
+//            } else {
+//                print("login fail")
+//            }
+//        }
     }
     
     
@@ -157,17 +177,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userNameTextField.text = ""
         passwordTextField.text = ""
         
-        do {
-           try Auth.auth().signOut()
-        } catch {
-           print(error)
-        }
+//        do {
+//           try Auth.auth().signOut()
+//        } catch {
+//           print(error)
+//        }
         
         let manager = LoginManager()
         manager.logOut()
-        fbLoginBtn.isHidden = false
+        /// 邏輯測試1.1, 此時登出 token 仍為原 token, fbLoginBtn 需重現
+//        fbLoginBtn.isHidden = false
         
-        GIDSignIn.sharedInstance.signOut()
+        
+//        GIDSignIn.sharedInstance.signOut()
         
     }
     
@@ -216,17 +238,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //        }
         
         //簡單的檢查過程
-        Auth.auth().signIn(withEmail: userNameTextField.text!, password: passwordTextField.text!) { result, error in
-            
-            if error == nil {
-                self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
-            } else {
-                let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
-                alert.addAction(backAction)
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
+//        Auth.auth().signIn(withEmail: userNameTextField.text!, password: passwordTextField.text!) { result, error in
+//
+//            if error == nil {
+//                self.performSegue(withIdentifier: "LoginToWelcome", sender: sender)
+//            } else {
+//                let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+//                let backAction = UIAlertAction(title: "Back", style: .cancel, handler: nil)
+//                alert.addAction(backAction)
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//        }
         
         
     }

@@ -41,6 +41,8 @@
 	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>451438349326565</string>
+	<key>FacebookClientToken</key>
+	<string>993ac9e52d277265861c364817cc4330</string>
 	<key>FacebookDisplayName</key>
 	<string>Demo_003</string>
 	<key>LSApplicationQueriesSchemes</key>

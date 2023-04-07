@@ -11,12 +11,11 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
     
     @IBAction func logoutBtnTapped(_ sender: Any) {
 //        dismiss(animated: true, completion: nil)
-        
     }
 
 }

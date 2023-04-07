@@ -12,19 +12,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    func scene(_ scene: UIScene,
-        openURLContexts URLContexts: Set<UIOpenURLContext>
-    ) {
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        // iOS13 的開啟網址功能已在 SceneDelegate
         guard let context = URLContexts.first else {
             return
         }
+        
         ApplicationDelegate.shared.application(
             UIApplication.shared,
             open: context.url,
-            sourceApplication:
-            context.options.sourceApplication,
-            annotation: context.options.annotation
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
         )
+
+//        ApplicationDelegate.shared.application(
+//            UIApplication.shared,
+//            open: context.url,
+//            sourceApplication: context.options.sourceApplication,
+//            annotation: context.options.annotation
+//        )
     }
     
     

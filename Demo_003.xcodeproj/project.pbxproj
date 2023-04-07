@@ -32,6 +32,7 @@
 		297B55FD269C287F008E69FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D8F564FD4C1494E4D627C03 /* Pods_Demo_003.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo_003.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C72C5A2E21EFEBBDB044E4E /* Pods-Demo_003.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_003.release.xcconfig"; path = "Target Support Files/Pods-Demo_003/Pods-Demo_003.release.xcconfig"; sourceTree = "<group>"; };
+		915599C029DFC2460054A179 /* Demo_003.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo_003.entitlements; sourceTree = "<group>"; };
 		98B28F46B447A542B58CF321 /* Pods-Demo_003.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_003.debug.xcconfig"; path = "Target Support Files/Pods-Demo_003/Pods-Demo_003.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +70,7 @@
 		297B55EE269C2878008E69FE /* Demo_003 */ = {
 			isa = PBXGroup;
 			children = (
+				915599C029DFC2460054A179 /* Demo_003.entitlements */,
 				297B55EF269C2878008E69FE /* AppDelegate.swift */,
 				297B55F1269C2878008E69FE /* SceneDelegate.swift */,
 				297B55F3269C2878008E69FE /* ViewController.swift */,
@@ -371,6 +373,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Demo_003/Demo_003.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWDLUM96X8;
 				INFOPLIST_FILE = Demo_003/Info.plist;
@@ -391,6 +394,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Demo_003/Demo_003.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VWDLUM96X8;
 				INFOPLIST_FILE = Demo_003/Info.plist;
