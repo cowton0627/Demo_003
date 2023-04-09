@@ -7,16 +7,25 @@
 
 import UIKit
 import FacebookCore
+//import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        // iOS13 的開啟網址功能已在 SceneDelegate
+        // 因 iOS13 的開啟網址功能已在此
         guard let context = URLContexts.first else {
             return
         }
+        
+//        var handled: Bool
+//        handled = GIDSignIn.sharedInstance.handle(context.url)
+//        if handled {
+//            print("Handle by GoogleSignIn.")
+//        } else {
+//            print("Didn't handle by GoogleSignIn.")
+//        }
         
         ApplicationDelegate.shared.application(
             UIApplication.shared,
@@ -24,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             sourceApplication: nil,
             annotation: [UIApplication.OpenURLOptionsKey.annotation]
         )
+        
 
 //        ApplicationDelegate.shared.application(
 //            UIApplication.shared,

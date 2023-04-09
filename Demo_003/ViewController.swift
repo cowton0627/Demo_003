@@ -6,12 +6,11 @@
 //
 
 import UIKit
-import SwiftUI
 //import FirebaseAuth
 import FacebookLogin
-//import GoogleSignIn
+import GoogleSignIn
 
-
+/// 登入頁面 VC
 class ViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - IBOutlet
@@ -50,13 +49,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //        if let token = AccessToken.current, !token.isExpired {
 //            fbLoginBtn.isHidden = true
 //        }
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // 檢查 FB Login token 決定是否登入
         if let token = AccessToken.current, !token.isExpired {
             performSegue(withIdentifier: "LoginToWelcome", sender: nil)
         }
+        
+        // 檢查 Google Login 決定是否登入
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error != nil || user == nil {
+                print("Stay at or Come back to Login Page.")
+            } else {
+                self.performSegue(withIdentifier: "LoginToWelcome", sender: nil)
+            }
+            
+        }
+        
     }
     
     // MARK: - func
@@ -77,15 +87,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - IBAction
-    @IBAction func googleBtnTapped(_ sender: Any) {
-//        let signInConfig = GIDConfiguration.init(clientID: "1016905938526-96mub16ag1ep1a37mdfui8qibghsu0a2.apps.googleusercontent.com")
-//        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
-//            guard error == nil else { return }
-//            self.performSegue(withIdentifier: "LoginToWelcome", sender: nil)
-//        }
-        
-    }
-    
     @IBAction func signUpBtnTapped(_ sender: Any) {
         let signUpAlert = UIAlertController(title: "註冊帳號", message: "", preferredStyle: .alert)
         
@@ -124,8 +125,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    /// 只使用 Google 登入時
+    @IBAction func googleBtnTapped(_ sender: Any) {
+        let signInConfig = GIDConfiguration(clientID: "1016905938526-96mub16ag1ep1a37mdfui8qibghsu0a2.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.signIn(with: signInConfig,
+                                        presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user = user else { return }
+            print(user.profile?.email ?? "none of email.")
+            print(user.profile?.name ?? "none of name.")
+            print(user.profile?.givenName ?? "none of givenName.")
+            print(user.profile?.familyName ?? "none of familyName.")
+            self.performSegue(withIdentifier: "LoginToWelcome", sender: nil)
+        }
+    }
+    
     @IBAction func fbLoginBtnTapped(_ sender: Any) {
-        // 只使用FB登入
+        /// 只使用FB登入時
         let fbManager = LoginManager()
         fbManager.logIn(permissions: [.publicProfile, .email]) { result in
             
@@ -173,6 +189,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    /// unwindSegue，為按下歡迎頁面 logout 後跳轉回此頁，需將 FB、Google 都 logout
     @IBAction func unwindToViewController(_ unwindSegue: UIStoryboardSegue) {
         userNameTextField.text = ""
         passwordTextField.text = ""
@@ -183,14 +200,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //           print(error)
 //        }
         
+        // FB Logout
         let manager = LoginManager()
         manager.logOut()
+        // Google Logout
+        GIDSignIn.sharedInstance.signOut()
+
+        
         /// 邏輯測試1.1, 此時登出 token 仍為原 token, fbLoginBtn 需重現
 //        fbLoginBtn.isHidden = false
-        
-        
-//        GIDSignIn.sharedInstance.signOut()
-        
     }
     
     
@@ -256,8 +274,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    
-    
+    // MARK: - objc func
     @objc func keyboardShown(notification: Notification) {
         let info: NSDictionary = notification.userInfo! as NSDictionary
         //取得鍵盤尺寸
@@ -282,36 +299,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
     @objc func keyboardHidden(notification: Notification) {
         UIView.animate(withDuration: 0.25, animations: {
             self.view.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
         })
     }
-    
-    
-//    struct ViewControllerView: UIViewControllerRepresentable {
-//        func makeUIViewController(context: Context) -> ViewController {
-//             UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ViewController") as! ViewController
-//        }
-//
-//        func updateUIViewController(_ uiViewController: ViewController, context: Context) {
-//        }
-//
-//        typealias UIViewControllerType = ViewController
-//
-//    }
-//
-//
-//    struct ViewControllerView_Previews: PreviewProvider {
-//        static var previews: some View {
-//            Group {
-//                ViewControllerView()
-//                    .previewDevice("iPhone 12 mini")
-//            }
-//        }
-//    }
-
     
 }
 

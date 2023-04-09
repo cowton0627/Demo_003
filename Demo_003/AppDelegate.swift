@@ -8,7 +8,7 @@
 import UIKit
 //import Firebase
 import FacebookCore
-//import GoogleSignIn
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,9 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 初始化 SDK
         ApplicationDelegate.shared.application(application,
-                                               didFinishLaunchingWithOptions: launchOptions)
-        
-        
+                                               didFinishLaunchingWithOptions: launchOptions)        
         
 //        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
 //            if error != nil || user == nil {
@@ -34,36 +32,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // 此行非必須，因 iOS13 開啟網址功能已在 SceneDelegate 處理
+    
+    // 此段移除，因 iOS13 開啟網址功能已改在 SceneDelegate 處理
 //    func application(_ app: UIApplication,
 //                     open url: URL,
 //                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 //
-//        ApplicationDelegate.shared.application(app, open: url, options: options)
-//
-////        var handled: Bool
-//
-////          handled = GIDSignIn.sharedInstance.handle(url)
-////          if handled {
-////            return true
-////          }
-//
-//          // Handle other custom URL types.
-//
-//          // If not handled by this app, return false.
-//          return false
-//
+//        var handled: Bool
+//        handled = GIDSignIn.sharedInstance.handle(url)
+//        if handled {
+//          ApplicationDelegate.shared.application(app, open: url, options: options)
+//        }
+//        return false
 //    }
 
+    
     // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        return UISceneConfiguration(name: "Default Configuration",
+                                    sessionRole: connectingSceneSession.role)
     }
 
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+    func application(_ application: UIApplication,
+                     didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
