@@ -19,14 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-//        var handled: Bool
-//        handled = GIDSignIn.sharedInstance.handle(context.url)
-//        if handled {
-//            print("Handle by GoogleSignIn.")
-//        } else {
-//            print("Didn't handle by GoogleSignIn.")
-//        }
-        
         ApplicationDelegate.shared.application(
             UIApplication.shared,
             open: context.url,
@@ -34,6 +26,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             annotation: [UIApplication.OpenURLOptionsKey.annotation]
         )
         
+//        var handled: Bool
+//        handled = GIDSignIn.sharedInstance.handle(context.url)
+//        if handled {
+//            print("Handle by GoogleSignIn.")
+//        } else {
+//            print("Didn't handle by GoogleSignIn.")
+//        }
 
 //        ApplicationDelegate.shared.application(
 //            UIApplication.shared,

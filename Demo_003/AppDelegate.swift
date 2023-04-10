@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import Firebase
+import Firebase
 import FacebookCore
 import GoogleSignIn
 
@@ -15,12 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         
-        // 初始化 SDK
+        // 初始化 FB SDK
         ApplicationDelegate.shared.application(application,
                                                didFinishLaunchingWithOptions: launchOptions)        
-        
+        /// 改在 viewDidAppear 判斷 Google 登入
 //        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
 //            if error != nil || user == nil {
 //              // Show the app's signed-out state.
@@ -33,11 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    // 此段移除，因 iOS13 開啟網址功能已改在 SceneDelegate 處理
+    /* 此段移除，因 iOS13 開啟網址功能已改在 SceneDelegate 處理，
+       且 Google Sign In 似不支援 Google APP 登入 */
 //    func application(_ app: UIApplication,
 //                     open url: URL,
 //                     options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-//
 //        var handled: Bool
 //        handled = GIDSignIn.sharedInstance.handle(url)
 //        if handled {
