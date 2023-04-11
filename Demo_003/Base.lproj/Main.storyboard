@@ -17,25 +17,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="帳號" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wwo-Pj-qyy">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 帳號" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wwo-Pj-qyy">
                                 <rect key="frame" x="87.666666666666686" y="501.66666666666674" width="200" height="34"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="9Nl-aQ-Ceb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="emergencyCall"/>
+                                <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Nat-5I-CNZ"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密碼" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ycR-bO-NKS">
                                 <rect key="frame" x="87.666666666666686" y="582.66666666666663" width="200" height="34"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="pQn-eI-7O6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Jwk-Hs-OnU"/>
                                 </connections>
@@ -120,15 +121,13 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AwM-5g-wPK">
-                                <rect key="frame" x="273" y="47" width="86" height="56"/>
+                                <rect key="frame" x="273" y="47" width="86" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="08b-9K-pXL"/>
+                                    <constraint firstAttribute="height" constant="40" id="08b-9K-pXL"/>
                                     <constraint firstAttribute="width" constant="86" id="VBp-Wy-Rdr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Sign Up">
-                                    <color key="titleColor" systemColor="systemBlueColor"/>
-                                </state>
+                                <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <action selector="signUpBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c2D-po-zUK"/>
                                 </connections>
@@ -164,6 +163,7 @@
                     <connections>
                         <outlet property="fbLoginBtn" destination="s0C-ZE-e3O" id="1ea-wa-tYJ"/>
                         <outlet property="passwordTextField" destination="ycR-bO-NKS" id="kLl-NS-OSs"/>
+                        <outlet property="signUpBtn" destination="AwM-5g-wPK" id="5XG-eW-Yqy"/>
                         <outlet property="userNameTextField" destination="wwo-Pj-qyy" id="uht-gJ-WkA"/>
                         <segue destination="X4f-oH-iWs" kind="presentation" identifier="LoginToWelcome" modalPresentationStyle="fullScreen" id="7Wk-Dq-JwO"/>
                     </connections>
@@ -191,10 +191,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUy-6g-sba">
-                                <rect key="frame" x="107.66666666666669" y="676" width="160" height="30"/>
+                                <rect key="frame" x="107.66666666666669" y="653" width="160" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="0OJ-xV-xq4"/>
-                                    <constraint firstAttribute="height" constant="30" id="k3E-yn-x7z"/>
+                                    <constraint firstAttribute="height" constant="40" id="k3E-yn-x7z"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Logout"/>
@@ -208,12 +208,15 @@
                         <constraints>
                             <constraint firstItem="oNq-7m-h2i" firstAttribute="centerY" secondItem="BEn-au-038" secondAttribute="centerY" id="1Ra-Q3-VEh"/>
                             <constraint firstItem="GC8-76-T4u" firstAttribute="trailing" secondItem="wUy-6g-sba" secondAttribute="trailing" constant="107.33" id="A5E-6p-eRz"/>
-                            <constraint firstItem="GC8-76-T4u" firstAttribute="bottom" secondItem="wUy-6g-sba" secondAttribute="bottom" constant="72" id="IJ5-o9-790"/>
+                            <constraint firstItem="GC8-76-T4u" firstAttribute="bottom" secondItem="wUy-6g-sba" secondAttribute="bottom" constant="85" id="IJ5-o9-790"/>
                             <constraint firstItem="oNq-7m-h2i" firstAttribute="centerX" secondItem="BEn-au-038" secondAttribute="centerX" id="XQ6-r7-v0k"/>
                             <constraint firstItem="wUy-6g-sba" firstAttribute="leading" secondItem="GC8-76-T4u" secondAttribute="leading" constant="107.67" id="g4Z-hz-9R1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WlF-sa-lNA"/>
+                    <connections>
+                        <outlet property="logoutBtn" destination="wUy-6g-sba" id="DYG-Ez-0Wl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vF6-SH-RdN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="6UW-bu-bef" userLabel="Exit" sceneMemberID="exit"/>
@@ -225,9 +228,6 @@
         <image name="facebook" width="512" height="512"/>
         <image name="google" width="512" height="512"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray4Color">

@@ -15,6 +15,7 @@ import GoogleSignIn
 class ViewController: UIViewController {
     
     // MARK: - IBOutlet
+    @IBOutlet weak var signUpBtn: UIButton!
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -33,6 +34,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configureTextField()
         configureKeyboardNotiCenter()
+        configureSignUpBtn()
         
         
         /// 測試加入註冊資料
@@ -92,6 +94,12 @@ class ViewController: UIViewController {
         center.addObserver(self, selector: #selector(keyboardHidden),
                           name: UIResponder.keyboardWillHideNotification,
                           object: nil)
+    }
+    
+    private func configureSignUpBtn() {
+        signUpBtn.layer.cornerRadius = 10
+        signUpBtn.backgroundColor = .systemBrown
+        signUpBtn.tintColor = .white
     }
     
     // MARK: - IBAction
